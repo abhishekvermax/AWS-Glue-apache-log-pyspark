@@ -72,10 +72,10 @@ spark = glueContext.spark_session
 job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 ## @type: DataSource
-## @args: [database = "rtl_db", table_name = "rtl1_input", transformation_ctx = "datasource0"]
+## @args: [database = "sample_db", table_name = "sample1_input", transformation_ctx = "datasource0"]
 ## @return: datasource0
 ## @inputs: []
-datasource0 = glueContext.create_dynamic_frame.from_catalog(database = "rtl_db", table_name = "rtl1_input", transformation_ctx = "datasource0")
+datasource0 = glueContext.create_dynamic_frame.from_catalog(database = "sample_db", table_name = "sample1_input", transformation_ctx = "datasource0")
 
 applymapping1 = ApplyMapping.apply(frame = datasource0, mappings = [("cookieid", "string", "cookieid", "string"), ("tdate", "string", "tdate", "string"), ("tstamp", "string", "tstamp", "string"), ("tzone", "string", "tzone", "string"), ("verb", "string", "verb", "string"), ("request", "string", "request", "string"), ("httpversion", "string", "httpversion", "string"), ("response", "string", "response", "string"), ("size", "string", "size", "string"), ("referrer", "string", "referrer", "string"), ("agent", "string", "agent", "string")], transformation_ctx = "applymapping1")
 
