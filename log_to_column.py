@@ -96,10 +96,10 @@ agent_browser1 = udf(agent_browser)
 
 
 for i in df.cols:
-sdp_df_t1=sdp_df_t1.filter("cookieid is not null").withColumn("year", substr_func(sdp_df_t1["tdate"],4)).withColumn("month", substr_func(sdp_df_t1["tdate"],7)).withColumn("agentgethttp", agentgethttp_func1(sdp_df_t1["request"])).withColumn("auid", auid_func1(sdp_df_t1["request"])).withColumn("scid", scid_func1(sdp_df_t1["request"])).withColumn("keyword", keyword_func1(sdp_df_t1["request"])).withColumn("keyword_id", keyword_id_func1(sdp_df_t1["request"])).withColumn("url", extract_url1(sdp_df_t1["referrer"])).withColumn("agent_browser", agent_browser1(sdp_df_t1["agent"]))
+sdf_t1=df_t1.filter("cookieid is not null").withColumn("year", substr_func(df_t1["tdate"],4)).withColumn("month", substr_func(df_t1["tdate"],7)).withColumn("agentgethttp", agentgethttp_func1(sdp_df_t1["request"])).withColumn("auid", auid_func1(df_t1["request"])).withColumn("scid", scid_func1(df_t1["request"])).withColumn("keyword", keyword_func1(df_t1["request"])).withColumn("keyword_id", keyword_id_func1(df_t1["request"])).withColumn("url", extract_url1(df_t1["referrer"])).withColumn("agent_browser", agent_browser1(df_t1["agent"]))
 
 
-sdp_df_t=sdp_df_t1.createOrReplaceTempView("sdp_df_tbl")
+df_t=df_t1.createOrReplaceTempView("sdp_df_tbl")
 
 sdp_df_sql = spark.sql("""SELECT cookieid, year, month, tdate as day, 
 tstamp, tzone, verb, agentgethttp, auid, scid, keyword, keyword_id, request, httpversion, response, size, url, agent_browser, referrer, agent FROM df_tbl""")
