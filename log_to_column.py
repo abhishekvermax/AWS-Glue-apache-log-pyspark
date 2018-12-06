@@ -102,11 +102,11 @@ sdp_df_t1=sdp_df_t1.filter("cookieid is not null").withColumn("year", substr_fun
 sdp_df_t=sdp_df_t1.createOrReplaceTempView("sdp_df_tbl")
 
 sdp_df_sql = spark.sql("""SELECT cookieid, year, month, tdate as day, 
-tstamp, tzone, verb, agentgethttp, auid, scid, keyword, keyword_id, request, httpversion, response, size, url, agent_browser, referrer, agent FROM sdp_df_tbl""")
+tstamp, tzone, verb, agentgethttp, auid, scid, keyword, keyword_id, request, httpversion, response, size, url, agent_browser, referrer, agent FROM df_tbl""")
 
 
-sdp_dynf_final = DynamicFrame.fromDF(sdp_df_sql, glueContext, "sdp_dynf_final")
-sdp_dynf_final.show()
-datasink1 = glueContext.write_dynamic_frame.from_options(frame = sdp_dynf_final, connection_type = "s3", connection_options = {"path": "s3://rtl-data-sources-test/output", "partitionKeys": ["year", "month", "day"]}, format = "csv", transformation_ctx = "datasink1")
+df_sql = DynamicFrame.fromDF(df_sql, glueContext, "df")
+df.show()
+datasink1 = glueContext.write_dynamic_frame.from_options(frame = sdp_dynf_final, connection_type = "s3", connection_options = {"path": "s3://data-sources-test/output", "partitionKeys": ["year", "month", "day"]}, format = "csv", transformation_ctx = "datasink1")
 
 job.commit()
